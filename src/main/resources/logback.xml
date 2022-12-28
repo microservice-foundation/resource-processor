@@ -49,7 +49,7 @@
     <!-- Logging at TRACE level -->
     <logger name="com.log" level="trace" additivity="false">
         <appender-ref ref="LogFile" />
-        <!-- <appender-ref ref="ConsoleOutput" /> -->
+        <appender-ref ref="ConsoleOutput" />
     </logger>
     <!-- Logging at INFO level -->
     <root level="info">

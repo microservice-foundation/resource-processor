@@ -15,6 +15,8 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -42,11 +44,14 @@ class ResourceProcessorServiceTest {
     }
 
     @Test
-    void shouldProcessResource() throws FileNotFoundException {
+    void shouldProcessResource() throws IOException {
         ResourceRecord resourceRecord = new ResourceRecord(1L);
-        File file = ResourceUtils.getFile("classpath:files/mpthreetest.mp3");
+        File file = ResourceUtils.getFile("src/test/resources/files/mpthreetest.mp3");
+        File testFile = ResourceUtils.getFile("src/test/resources/files/test.mp3");
+        Files.copy(file.toPath(), testFile.toPath());
+
         when(resourceRecordValidator.validate(resourceRecord)).thenReturn(Boolean.TRUE);
-        when(resourceServiceClient.getById(resourceRecord.getId())).thenReturn(Optional.of(file));
+        when(resourceServiceClient.getById(resourceRecord.getId())).thenReturn(Optional.of(testFile));
         when(songServiceClient.post(any())).thenReturn(new SongRecordId(1L));
 
         boolean isProcessed = service.processResource(resourceRecord);
@@ -60,7 +65,6 @@ class ResourceProcessorServiceTest {
     @Test
     void shouldThrowExceptionForValidationWhenProcessResource() throws FileNotFoundException {
         ResourceRecord resourceRecord = new ResourceRecord(0L);
-        File file = ResourceUtils.getFile("classpath:files/mpthreetest.mp3");
         when(resourceRecordValidator.validate(resourceRecord)).thenReturn(Boolean.FALSE);
 
         assertThrows(IllegalArgumentException.class, () -> service.processResource(resourceRecord));
@@ -82,11 +86,14 @@ class ResourceProcessorServiceTest {
     }
 
     @Test
-    void shouldReturnEmptySongRecordIdWhenProcessResource() throws FileNotFoundException {
+    void shouldReturnEmptySongRecordIdWhenProcessResource() throws IOException {
         ResourceRecord resourceRecord = new ResourceRecord(1L);
-        File file = ResourceUtils.getFile("classpath:files/mpthreetest.mp3");
+        File file = ResourceUtils.getFile("src/test/resources/files/mpthreetest.mp3");
+        File testFile = ResourceUtils.getFile("src/test/resources/files/test.mp3");
+        Files.copy(file.toPath(), testFile.toPath());
+
         when(resourceRecordValidator.validate(resourceRecord)).thenReturn(Boolean.TRUE);
-        when(resourceServiceClient.getById(resourceRecord.getId())).thenReturn(Optional.of(file));
+        when(resourceServiceClient.getById(resourceRecord.getId())).thenReturn(Optional.of(testFile));
         when(songServiceClient.post(any())).thenReturn(null);
 
         boolean isProcessed = service.processResource(resourceRecord);

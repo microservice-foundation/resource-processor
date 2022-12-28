@@ -28,8 +28,6 @@ retry:
     delay: 500
 
 # application configuration
-#logging:
-#  level:
-#    root: DEBUG
+logging.level.root: DEBUG
 
 

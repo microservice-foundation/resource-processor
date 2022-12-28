@@ -13,6 +13,11 @@ repositories {
     maven { url 'https://repo.spring.io/milestone' }
 }
 
+bootRun {
+    // support passing -Dsystem.property=value to bootRun task
+    systemProperties = System.properties
+}
+
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

@@ -4,6 +4,8 @@ import com.epam.training.microservicefoundation.resourceprocessor.client.Resourc
 import com.epam.training.microservicefoundation.resourceprocessor.client.SongServiceClient;
 import com.epam.training.microservicefoundation.resourceprocessor.domain.ResourceRecord;
 import com.epam.training.microservicefoundation.resourceprocessor.domain.SongRecord;
+import com.mpatric.mp3agic.ID3v1;
+import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -51,27 +54,40 @@ public class ResourceProcessorService {
 
         Optional<File> fileOptional = resourceServiceClient.getById(resourceRecord.getId());
         boolean isProcessed = fileOptional.map(file -> {
-            SongRecord songRecord = null;
             try {
-                // TODO: consider v2Tag if v1Tag is null
-                Mp3File mp3File = new Mp3File(file);
-                songRecord = new SongRecord.Builder(resourceRecord.getId(), mp3File.getId3v1Tag().getTitle(),
-                        String.format(
-                                "%1d:%2d", mp3File.getLengthInSeconds() / 60, mp3File.getLengthInSeconds() % 60))
-                        .artist(mp3File.getId3v1Tag().getArtist())
-                        .album(mp3File.getId3v1Tag().getAlbum())
-                        .year(Integer.parseInt(mp3File.getId3v1Tag().getYear()))
-                        .build();
+                return processFile(resourceRecord.getId(), file);
             } catch (InvalidDataException | UnsupportedTagException | IOException ex) {
                 log.error("MP3 file processing failed for resource '{}' ", resourceRecord, ex);
+                return null;
             }
-            return songRecord;
         })
         .map(songServiceClient::post)
         .isPresent();
 
         fileOptional.ifPresent(this::removeIfExists);
         return isProcessed;
+    }
+
+    private SongRecord processFile(long resourceId, File file) throws InvalidDataException, UnsupportedTagException, IOException {
+        Mp3File mp3File = new Mp3File(file);
+        String duration = String.format("%1d:%2d", mp3File.getLengthInSeconds() / 60, mp3File.getLengthInSeconds() % 60);
+        if(mp3File.hasId3v1Tag()) {
+            return new SongRecord.Builder(resourceId, mp3File.getId3v1Tag().getTitle(),
+                    duration)
+                    .artist(mp3File.getId3v1Tag().getArtist())
+                    .album(mp3File.getId3v1Tag().getAlbum())
+                    .year(Integer.parseInt(mp3File.getId3v1Tag().getYear()))
+                    .build();
+        } else if (mp3File.hasId3v2Tag()) {
+            return new SongRecord.Builder(resourceId, mp3File.getId3v2Tag().getTitle(),
+                    duration)
+                    .artist(mp3File.getId3v2Tag().getArtist())
+                    .album(mp3File.getId3v2Tag().getAlbum())
+                    .year(Integer.parseInt(mp3File.getId3v2Tag().getYear()))
+                    .build();
+        } else {
+            return new SongRecord.Builder(resourceId, "No name: " + LocalDateTime.now(), duration).build();
+        }
     }
 
     private void removeIfExists(File file) {

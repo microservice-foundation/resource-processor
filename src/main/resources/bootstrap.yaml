@@ -1,8 +1,7 @@
-server.port: ${SERVICE_PORT:0}
+server.port: 0
 
 spring:
-  application:
-    name: ${MICROSERVICE_NAME:resource-processor-service}
+  application.name: ${MICROSERVICE_NAME:resource-processor-service}
   cloud:
     config:
       fail-fast: true
@@ -18,7 +17,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8770/eureka}
+      defaultZone: ${EUREKA_HOST:http://localhost:8770}/eureka
     register-with-eureka: true
     fetch-registry: true
     healthcheck:
@@ -29,4 +28,4 @@ eureka:
     lease-renewal-interval-in-seconds: 10
     preferIpAddress: true
 
-management.endpoints.web.exposure.include: health, info
+management.endpoints.web.exposure.include: health, info, refresh
