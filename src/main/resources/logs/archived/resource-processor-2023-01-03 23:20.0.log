@@ -1,0 +1,8 @@
+2023-01-03 23:20:54 [Test worker] INFO  : [Consumer clientId=consumer-resource-processor-1, groupId=resource-processor] Revoke previously assigned partitions resources-0
+2023-01-03 23:20:54 [Test worker] INFO  : [Consumer clientId=consumer-resource-processor-1, groupId=resource-processor] Member consumer-resource-processor-1-37b55f6c-db02-40d2-9164-683cde81826b sending LeaveGroup request to coordinator localhost:57989 (id: 2147483646 rack: null) due to the consumer is being closed
+2023-01-03 23:20:54 [Test worker] INFO  : [Consumer clientId=consumer-resource-processor-1, groupId=resource-processor] Resetting generation due to: consumer pro-actively leaving the group
+2023-01-03 23:20:54 [Test worker] INFO  : [Consumer clientId=consumer-resource-processor-1, groupId=resource-processor] Request joining group due to: consumer pro-actively leaving the group
+2023-01-03 23:20:54 [Test worker] INFO  : Metrics scheduler closed
+2023-01-03 23:20:54 [Test worker] INFO  : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2023-01-03 23:20:54 [Test worker] INFO  : Metrics reporters closed
+2023-01-03 23:20:54 [Test worker] INFO  : App info kafka.consumer for consumer-resource-processor-1 unregistered

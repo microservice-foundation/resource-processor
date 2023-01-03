@@ -5,51 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fedcdf9b-e73c-4ac6-b13b-d4df74f285e2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/5/05efc8b1657769a27696d478ded1e95f38737233" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/ResourceProcessorApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/client/BaseClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/client/ResourceServiceClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/client/SongServiceClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/configuration/KafkaConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/configuration/ResourceServiceClientConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/configuration/RetryConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/configuration/SongServiceClientConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/domain/ResourceNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/domain/ResourceRecord.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/domain/ResourceRecordTemp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/domain/ResourceType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/domain/SongRecord.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/domain/SongRecordId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/service/Convertor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/service/FileConvertor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/service/KafkaManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/service/ResourceProcessorService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/service/ResourceRecordValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/training/microservicefoundation/resourceprocessor/service/Validator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/logback.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/epam/training/microservicefoundation/service/ResourceProcessorServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/files/mpthreetest.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/4/047ff32cc58e1059caabf43d2cf8f146fa2633f5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/5/05a721ebe3ba0754116825ed1359ff1785f4bbac" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/e/0e6b15e59138160cbc98212f29c46c1e69dd57cd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/9/19101832817fa5e88eeaae6af9997e725a99725b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/2/32d16793296ab7f55e8896ede76f6cfb25c9cf5a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/e/5ecd0e0e45c0cc3fd18ad1e02a349cb8a15fae45" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/6/6651ddff6eb82c840ced7c1dddee15c6e1913dd4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/0/70fd835fd848dd1dba6b155f4060900507256d30" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/5/a5cc2925ca8258af241be7e5b0381edf30266302" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/c/ac91592378ebf55fa1cb418680900c14f12b833f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/3/b35b0e3c22274576cf5ae725f8d5bde2b2f9b184" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/3/d333d754e7c23543672c7e8837af95708caebb91" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/e/fe9a459a56c80b7c56312cc3a040d8cede0044de" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/epam/training/microservicefoundation/resourceprocessor/FakeKafkaProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/epam/training/microservicefoundation/resourceprocessor/KafkaExtension.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/epam/training/microservicefoundation/resourceprocessor/KafkaManagerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/epam/training/microservicefoundation/resourceprocessor/configuration/KafkaTestConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/epam/training/microservicefoundation/resourceprocessor/configuration/KafkaTopicTestConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/epam/training/microservicefoundation/service/ResourceProcessorServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/epam/training/microservicefoundation/resourceprocessor/ResourceProcessorServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,34 +73,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/Yusuf_Murodov/Local/epam/traning/microservices/resource-processor/src/test&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "/Users/Yusuf_Murodov/Local/epam/traning/microservices/resource-processor-service/src/test/java/com/epam/training/microservicefoundation/resourceprocessor/configuration"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.epam.training.microservicefoundation.resourceprocessor.service" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/java/com/epam/training/microservicefoundation/resourceprocessor/configuration" />
       <recent name="$PROJECT_DIR$/src/test" />
       <recent name="$PROJECT_DIR$/src/test/resources" />
       <recent name="$PROJECT_DIR$/src/test/java" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src/main/java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/test/java/com/epam/training/microservicefoundation/service" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.epam.training.microservicefoundation.resourceprocessor" />
       <recent name="com.epam.training.microservicefoundation.resourceprocessor.service" />
       <recent name="com.epam.training.microservicefoundation.resourceprocessor.configuration" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ResourceProcessorApplication">
+  <component name="RunManager" selected="Gradle.KafkaManagerTest.shouldThrowExceptionWhenProduceAndConsumeRecord">
     <configuration name="ResourceProcessorApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.epam.training.microservicefoundation.resourceprocessor.ResourceProcessorApplication" />
       <module name="resource-processor.main" />
@@ -137,6 +114,52 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="KafkaManagerTest.shouldProduceAndConsumeSuccessfully" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.epam.training.microservicefoundation.resourceprocessor.KafkaManagerTest.shouldProduceAndConsumeSuccessfully&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="KafkaManagerTest.shouldThrowExceptionWhenProduceAndConsumeRecord" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.epam.training.microservicefoundation.resourceprocessor.KafkaManagerTest.shouldThrowExceptionWhenProduceAndConsumeRecord&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
     </configuration>
     <configuration name="ResourceProcessorServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -152,29 +175,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;com.epam.training.microservicefoundation.service.ResourceProcessorServiceTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="ResourceProcessorServiceTest.shouldReturnEmptyResourceWhenProcessResource" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;com.epam.training.microservicefoundation.service.ResourceProcessorServiceTest.shouldReturnEmptyResourceWhenProcessResource&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -207,36 +207,20 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ResourceProcessorServiceTest.shouldThrowExceptionForValidationWhenProcessResource" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;com.epam.training.microservicefoundation.service.ResourceProcessorServiceTest.shouldThrowExceptionForValidationWhenProcessResource&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
+    <list>
+      <item itemvalue="Application.ResourceProcessorApplication" />
+      <item itemvalue="Gradle.KafkaManagerTest.shouldProduceAndConsumeSuccessfully" />
+      <item itemvalue="Gradle.KafkaManagerTest.shouldThrowExceptionWhenProduceAndConsumeRecord" />
+      <item itemvalue="Gradle.ResourceProcessorServiceTest" />
+      <item itemvalue="Gradle.ResourceProcessorServiceTest.shouldReturnEmptySongRecordIdWhenProcessResource" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.KafkaManagerTest.shouldThrowExceptionWhenProduceAndConsumeRecord" />
+        <item itemvalue="Gradle.KafkaManagerTest.shouldProduceAndConsumeSuccessfully" />
         <item itemvalue="Application.ResourceProcessorApplication" />
         <item itemvalue="Gradle.ResourceProcessorServiceTest" />
         <item itemvalue="Gradle.ResourceProcessorServiceTest.shouldReturnEmptySongRecordIdWhenProcessResource" />
-        <item itemvalue="Gradle.ResourceProcessorServiceTest.shouldReturnEmptyResourceWhenProcessResource" />
-        <item itemvalue="Gradle.ResourceProcessorServiceTest.shouldThrowExceptionForValidationWhenProcessResource" />
       </list>
     </recent_temporary>
   </component>
@@ -261,5 +245,12 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.springframework.web.reactive.function.client.DefaultWebClientBuilder" memberName="uriBuilderFactory" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>
