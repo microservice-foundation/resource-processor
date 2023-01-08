@@ -12,6 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Map;
 
 public class SongServiceClient {
+    //TODO: change to reactive
     private static final Logger log = LoggerFactory.getLogger(SongServiceClient.class);
     private static final String SONGS = "/songs";
     private final WebClient webClient;

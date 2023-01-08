@@ -17,6 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class ResourceServiceClient {
+    //TODO: change to reactive
     private static final Logger log = LoggerFactory.getLogger(ResourceServiceClient.class);
     private static final String RESOURCES = "/resources";
     private static final String ID = "/{id}";

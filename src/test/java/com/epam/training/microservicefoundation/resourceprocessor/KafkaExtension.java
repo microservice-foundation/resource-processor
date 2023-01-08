@@ -16,7 +16,7 @@ public class KafkaExtension implements BeforeAllCallback, AfterAllCallback {
 
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
-
+        container.close();
     }
 
     @Override
@@ -25,9 +25,5 @@ public class KafkaExtension implements BeforeAllCallback, AfterAllCallback {
         container.start();
 
         System.setProperty("kafka.bootstrap-servers", container.getBootstrapServers());
-        System.setProperty("kafka.consumer.concurrency", "3");
-        System.setProperty("kafka.topic.partitions.count", "3");
-        System.setProperty("kafka.topic.replication.factor", "3");
-        System.setProperty("kafka.topic.resources", "resources");
     }
 }
