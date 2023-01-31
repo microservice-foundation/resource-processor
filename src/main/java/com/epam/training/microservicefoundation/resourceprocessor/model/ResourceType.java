@@ -1,4 +1,4 @@
-package com.epam.training.microservicefoundation.resourceprocessor.domain;
+package com.epam.training.microservicefoundation.resourceprocessor.model;
 
 import java.util.Arrays;
 

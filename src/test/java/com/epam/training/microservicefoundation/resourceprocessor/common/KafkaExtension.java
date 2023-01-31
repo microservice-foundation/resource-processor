@@ -1,4 +1,4 @@
-package com.epam.training.microservicefoundation.resourceprocessor;
+package com.epam.training.microservicefoundation.resourceprocessor.common;
 
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;

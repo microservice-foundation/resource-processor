@@ -1,23 +1,20 @@
-package com.epam.training.microservicefoundation.resourceprocessor;
+package com.epam.training.microservicefoundation.resourceprocessor.service;
 
 import com.epam.training.microservicefoundation.resourceprocessor.client.ResourceServiceClient;
 import com.epam.training.microservicefoundation.resourceprocessor.client.SongServiceClient;
+import com.epam.training.microservicefoundation.resourceprocessor.common.FakeKafkaProducer;
+import com.epam.training.microservicefoundation.resourceprocessor.common.KafkaExtension;
+import com.epam.training.microservicefoundation.resourceprocessor.common.MockServer;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.KafkaTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.KafkaTopicTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.ResourceServiceClientTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.RetryTestConfiguration;
-import com.epam.training.microservicefoundation.resourceprocessor.configuration.Server;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.SongServiceClientTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.WebClientTestConfiguration;
-import com.epam.training.microservicefoundation.resourceprocessor.domain.ResourceRecord;
-import com.epam.training.microservicefoundation.resourceprocessor.domain.ResourceType;
-import com.epam.training.microservicefoundation.resourceprocessor.domain.SongRecordId;
-import com.epam.training.microservicefoundation.resourceprocessor.service.ResourceProcessorService;
-import com.epam.training.microservicefoundation.resourceprocessor.service.ResourceRecordValidator;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceRecord;
+import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceType;
+import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecordId;
 import kotlin.jvm.functions.Function1;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
 import okio.Buffer;
 import okio.Okio;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -26,7 +23,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
@@ -34,27 +30,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
+import org.springframework.retry.support.RetryTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.ResourceUtils;
+import reactor.netty.http.client.HttpClient;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.Duration;
 import java.util.Collections;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// Extensions registered declaratively via @ExtendWith at the class level, method level,
+// or parameter level will be executed in the order in which they are declared in the source code.
+// https://junit.org/junit5/docs/current/user-guide/#extensions-registration-declarative:~:text=Extensions%20registered%20declaratively,that%20order.
+
 @ExtendWith(value = {
-        SpringExtension.class,
         KafkaExtension.class,
-        MockitoExtension.class,
-        ExternalServerExtension.class
+        SpringExtension.class,
 })
 @ContextConfiguration(classes = {
         KafkaTestConfiguration.class,
@@ -73,43 +74,57 @@ class KafkaManagerTest {
     private ConsumerFactory<String, ResourceRecord> consumerFactory;
     @Autowired
     private Environment environment;
+    @Autowired
+    private RetryTemplate retryTemplate;
+    @Autowired
+    private Map<String, String> resourceClientHeader;
+    @Autowired
+    private FileConvertor fileConvertor;
+    @Autowired
+    private Map<String, String> songServiceClientHeader;
+    @Autowired
+    private HttpClient httpClient;
     private ResourceProcessorService resourceProcessorService;
-    @Autowired
-    private ResourceServiceClient resourceServiceClient;
-    @Autowired
-    private SongServiceClient songServiceClient;
     private KafkaConsumer<String, ResourceRecord> consumer;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private MockServer resourceServiceServer;
+    private MockServer songServiceServer;
 
     @BeforeEach
     void setup() {
+        resourceServiceServer = MockServer.newInstance(httpClient);
+        songServiceServer = MockServer.newInstance(httpClient);
+        ResourceServiceClient resourceServiceClient = new ResourceServiceClient(resourceClientHeader, fileConvertor,
+                retryTemplate, resourceServiceServer.getWebClient());
+
+        SongServiceClient songServiceClient = new SongServiceClient(songServiceClientHeader, retryTemplate,
+                songServiceServer.getWebClient());
+
         consumer =(KafkaConsumer<String, ResourceRecord>) consumerFactory.createConsumer();
         resourceProcessorService = new ResourceProcessorService(new ResourceRecordValidator(), resourceServiceClient,
                 songServiceClient);
+
         consumer.subscribe(Collections.singletonList(environment.getProperty(TOPIC)));
         consumer.poll(Duration.ofSeconds(5));
 
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws IOException {
         consumer.close();
+        resourceServiceServer.dispose();
+        songServiceServer.dispose();
     }
 
     @Test
-    void shouldProduceAndConsumeRecordSuccessfully(@Server(serveTo = ResourceServiceClient.class)
-                                                   MockWebServer resourceServiceServer,
-                                                   @Server(serveTo = SongServiceClient.class)
-                                                   MockWebServer songServiceServer) throws IOException,
+    void shouldProduceAndConsumeRecordSuccessfully() throws IOException,
             ExecutionException, InterruptedException {
 
         ResourceRecord resourceRecord = new ResourceRecord(1L);
-        resourceServiceServer.enqueue(new MockResponse().setResponseCode(HttpStatus.OK.value())
-                .setHeader(HttpHeaders.CONTENT_TYPE, ResourceType.MP3.getMimeType()).setBody(fileBuffer()));
+        resourceServiceServer.responseWithBuffer(HttpStatus.OK, fileBuffer(),
+                Collections.singletonMap(HttpHeaders.CONTENT_TYPE, ResourceType.MP3.getMimeType()));
 
-        songServiceServer.enqueue(new MockResponse().setResponseCode(HttpStatus.CREATED.value())
-                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(mapper.writeValueAsString(new SongRecordId(1L))));
+        songServiceServer.responseWithJson(HttpStatus.CREATED, new SongRecordId(1L),
+                Collections.singletonMap(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE));
 
         producer.publish(resourceRecord);
         ConsumerRecord<String, ResourceRecord> record = KafkaTestUtils.getSingleRecord(consumer, environment.getProperty(TOPIC));
@@ -118,35 +133,30 @@ class KafkaManagerTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenProduceAndConsumeRecord(@Server(serveTo = ResourceServiceClient.class)
-                                             MockWebServer resourceServiceServer,
-                                             @Server(serveTo = SongServiceClient.class)
-                                             MockWebServer songServiceServer) throws ExecutionException,
-            InterruptedException, IOException {
+    void shouldThrowIllegalArgumentExceptionExceptionWhenProduceAndConsumeRecord() throws IOException, ExecutionException, InterruptedException {
 
         ResourceRecord resourceRecord = new ResourceRecord(0L);
-        resourceServiceServer.enqueue(new MockResponse().setResponseCode(HttpStatus.OK.value())
-                .setHeader(HttpHeaders.CONTENT_TYPE, ResourceType.MP3.getMimeType()).setBody(fileBuffer()));
+        resourceServiceServer.responseWithBuffer(HttpStatus.OK, fileBuffer(),
+                Collections.singletonMap(HttpHeaders.CONTENT_TYPE, ResourceType.MP3.getMimeType()));
 
-        songServiceServer.enqueue(new MockResponse().setResponseCode(HttpStatus.CREATED.value())
-                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(mapper.writeValueAsString(new SongRecordId(1L))));
+        songServiceServer.responseWithJson(HttpStatus.CREATED, new SongRecordId(1L),
+                Collections.singletonMap(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE));
 
         producer.publish(resourceRecord);
         ConsumerRecord<String, ResourceRecord> record = KafkaTestUtils.getSingleRecord(consumer, environment.getProperty(TOPIC));
         assertThrows(IllegalArgumentException.class, ()-> resourceProcessorService.processResource(record.value()));
     }
-    
+
     @Test
-    void shouldThrowExceptionWhenProduceAndConsumeWithWrongFile(@Server(serveTo = ResourceServiceClient.class)
-                    MockWebServer resourceServiceServer) throws IOException, ExecutionException, InterruptedException {
-        
+    void shouldThrowIllegalArgumentExceptionWhenProduceAndConsumeWithWrongFile() throws IOException, ExecutionException,
+            InterruptedException {
+
         ResourceRecord resourceRecord = new ResourceRecord(1L);
         Buffer buffer = Okio.buffer(Okio.source(ResourceUtils.getFile("src/test/resources/files/wrong-audio.txt")))
                 .getBuffer();
 
-        resourceServiceServer.enqueue(new MockResponse().setResponseCode(HttpStatus.OK.value())
-                .setHeader(HttpHeaders.CONTENT_TYPE, ResourceType.MP3.getMimeType()).setBody(buffer));
+        resourceServiceServer.responseWithBuffer(HttpStatus.OK, buffer,
+                Collections.singletonMap(HttpHeaders.CONTENT_TYPE, ResourceType.MP3.getMimeType()));
 
         producer.publish(resourceRecord);
         ConsumerRecord<String, ResourceRecord> record = KafkaTestUtils.getSingleRecord(consumer, environment.getProperty(TOPIC));
@@ -154,43 +164,41 @@ class KafkaManagerTest {
     }
 
     @Test
-    void shouldFailWhenProduceAndConsumeWithWrongSongServiceResult(@Server(serveTo = ResourceServiceClient.class)
-                                                         MockWebServer resourceServiceServer,
-                                                         @Server(serveTo = SongServiceClient.class)
-                                                         MockWebServer songServiceServer) throws ExecutionException,
+    void shouldFailWhenProduceAndConsumeWithWrongSongServiceResult() throws ExecutionException,
             InterruptedException, IOException {
 
         ResourceRecord resourceRecord = new ResourceRecord(1L);
-        resourceServiceServer.enqueue(new MockResponse().setResponseCode(HttpStatus.OK.value())
-                .setHeader(HttpHeaders.CONTENT_TYPE, ResourceType.MP3.getMimeType()).setBody(fileBuffer()));
+        resourceServiceServer.responseWithBuffer(HttpStatus.OK, fileBuffer(),
+                Collections.singletonMap(HttpHeaders.CONTENT_TYPE, ResourceType.MP3.getMimeType()));
 
-        songServiceServer.enqueue(new MockResponse().setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody("Test"));
+        songServiceServer.responseWithJson(HttpStatus.INTERNAL_SERVER_ERROR, "InternalServerError",
+                Collections.singletonMap(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE));
 
         producer.publish(resourceRecord);
         ConsumerRecord<String, ResourceRecord> record = KafkaTestUtils.getSingleRecord(consumer, environment.getProperty(TOPIC));
         boolean isProcessed = resourceProcessorService.processResource(record.value());
         assertFalse(isProcessed);
+
     }
 
     @Test
-    void shouldThrowExceptionWhenProduceAndConsumeWithWrongResourceServiceResult(@Server(serveTo =
-            ResourceServiceClient.class) MockWebServer resourceServiceServer)
+    void shouldThrowExceptionWhenProduceAndConsumeWithWrongResourceServiceResult()
             throws ExecutionException, InterruptedException, IOException {
 
         ResourceRecord resourceRecord = new ResourceRecord(1L);
-        resourceServiceServer.enqueue(new MockResponse().setResponseCode(HttpStatus.OK.value())
-                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).setBody("Test"));
+        resourceServiceServer.responseWithJson(HttpStatus.OK, "Wrong response body test",
+                Collections.singletonMap(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE));
 
 
         producer.publish(resourceRecord);
-        ConsumerRecord<String, ResourceRecord> record = KafkaTestUtils.getSingleRecord(consumer, environment.getProperty(TOPIC));
+        ConsumerRecord<String, ResourceRecord> record = KafkaTestUtils.getSingleRecord(consumer,
+                environment.getProperty(TOPIC));
+
         assertThrows(IllegalArgumentException.class, ()-> resourceProcessorService.processResource(record.value()));
     }
 
     @Test
-    void shouldThrowExceptionWhenProduceAndConsumeRecord() throws ExecutionException, InterruptedException {
+    void shouldThrowIllegalStateExceptionWhenProduceAndConsumeRecord() throws ExecutionException, InterruptedException {
         producer.publish(new Object());
         assertThrows(IllegalStateException.class,() -> KafkaTestUtils.getSingleRecord(consumer, environment.getProperty(
                 "kafka.topic.resources")));
@@ -218,5 +226,3 @@ class KafkaManagerTest {
         return testFile;
     }
 }
-
-

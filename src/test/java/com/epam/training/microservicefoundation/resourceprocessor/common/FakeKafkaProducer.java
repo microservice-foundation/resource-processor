@@ -1,4 +1,4 @@
-package com.epam.training.microservicefoundation.resourceprocessor;
+package com.epam.training.microservicefoundation.resourceprocessor.common;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;

@@ -2,10 +2,8 @@ package com.epam.training.microservicefoundation.resourceprocessor.service;
 
 import com.epam.training.microservicefoundation.resourceprocessor.client.ResourceServiceClient;
 import com.epam.training.microservicefoundation.resourceprocessor.client.SongServiceClient;
-import com.epam.training.microservicefoundation.resourceprocessor.domain.ResourceRecord;
-import com.epam.training.microservicefoundation.resourceprocessor.domain.SongRecord;
-import com.mpatric.mp3agic.ID3v1;
-import com.mpatric.mp3agic.ID3v2;
+import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceRecord;
+import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecord;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;

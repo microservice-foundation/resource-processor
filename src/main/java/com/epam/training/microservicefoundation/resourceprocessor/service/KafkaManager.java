@@ -1,6 +1,6 @@
 package com.epam.training.microservicefoundation.resourceprocessor.service;
 
-import com.epam.training.microservicefoundation.resourceprocessor.domain.ResourceRecord;
+import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,15 +13,15 @@ import java.util.Map;
 
 @TestConfiguration
 public class SongServiceClientTestConfiguration {
-
-    private Map<String, String> songServiceClientHeader() {
+    @Bean
+    public Map<String, String> songServiceClientHeader() {
         Map<String, String> header = new HashMap<>();
         header.put(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         return header;
     }
 
-    @Bean
-    public SongServiceClient songServiceClient(RetryTemplate retryTemplate, WebClient songServiceWebClient) {
-        return new SongServiceClient(songServiceClientHeader(), retryTemplate, songServiceWebClient);
-    }
+//    @Bean
+//    public SongServiceClient songServiceClient(RetryTemplate retryTemplate, WebClient songServiceWebClient) {
+//        return new SongServiceClient(songServiceClientHeader(), retryTemplate, songServiceWebClient);
+//    }
 }

@@ -1,7 +1,7 @@
 package com.epam.training.microservicefoundation.resourceprocessor.client;
 
-import com.epam.training.microservicefoundation.resourceprocessor.domain.SongRecord;
-import com.epam.training.microservicefoundation.resourceprocessor.domain.SongRecordId;
+import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecord;
+import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecordId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;

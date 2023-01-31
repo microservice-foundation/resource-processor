@@ -1,6 +1,6 @@
 package com.epam.training.microservicefoundation.resourceprocessor.service;
 
-import com.epam.training.microservicefoundation.resourceprocessor.domain.ResourceType;
+import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.buffer.DataBuffer;

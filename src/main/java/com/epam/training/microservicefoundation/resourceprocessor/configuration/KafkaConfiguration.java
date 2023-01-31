@@ -1,6 +1,6 @@
 package com.epam.training.microservicefoundation.resourceprocessor.configuration;
 
-import com.epam.training.microservicefoundation.resourceprocessor.domain.ResourceRecord;
+import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceRecord;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;

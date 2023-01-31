@@ -28,7 +28,8 @@ public class WebClientTestConfiguration {
     @Value("${web-client.write.timeout}")
     private String writeTimeout;
 
-    private HttpClient httpClient() {
+    @Bean
+    public HttpClient httpClient() {
         return  HttpClient.create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Integer.parseInt(connectionTimeout))
                 .responseTimeout(Duration.ofMillis(Long.parseLong(responseTimeout)))

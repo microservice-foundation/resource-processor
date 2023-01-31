@@ -2,8 +2,8 @@ package com.epam.training.microservicefoundation.resourceprocessor;
 
 import com.epam.training.microservicefoundation.resourceprocessor.client.ResourceServiceClient;
 import com.epam.training.microservicefoundation.resourceprocessor.client.SongServiceClient;
-import com.epam.training.microservicefoundation.resourceprocessor.domain.ResourceRecord;
-import com.epam.training.microservicefoundation.resourceprocessor.domain.SongRecordId;
+import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceRecord;
+import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecordId;
 import com.epam.training.microservicefoundation.resourceprocessor.service.ResourceProcessorService;
 import com.epam.training.microservicefoundation.resourceprocessor.service.ResourceRecordValidator;
 import org.junit.jupiter.api.BeforeEach;

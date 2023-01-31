@@ -1,6 +1,6 @@
 package com.epam.training.microservicefoundation.resourceprocessor.client;
 
-import com.epam.training.microservicefoundation.resourceprocessor.domain.ResourceType;
+import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceType;
 import com.epam.training.microservicefoundation.resourceprocessor.service.Convertor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

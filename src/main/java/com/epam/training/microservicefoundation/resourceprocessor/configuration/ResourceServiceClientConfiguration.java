@@ -1,7 +1,7 @@
 package com.epam.training.microservicefoundation.resourceprocessor.configuration;
 
 import com.epam.training.microservicefoundation.resourceprocessor.client.ResourceServiceClient;
-import com.epam.training.microservicefoundation.resourceprocessor.domain.ResourceType;
+import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceType;
 import com.epam.training.microservicefoundation.resourceprocessor.service.FileConvertor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
