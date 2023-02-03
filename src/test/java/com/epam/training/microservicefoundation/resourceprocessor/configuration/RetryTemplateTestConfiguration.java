@@ -10,7 +10,7 @@ import org.springframework.retry.support.RetryTemplate;
 
 @TestConfiguration
 @EnableRetry
-public class RetryTestConfiguration {
+public class RetryTemplateTestConfiguration {
 
     @Value("${retry.max.delay}")
     private int maxDelay;

@@ -1,6 +1,7 @@
 package com.epam.training.microservicefoundation.resourceprocessor.configuration;
 
 import com.epam.training.microservicefoundation.resourceprocessor.client.SongServiceClient;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
@@ -20,8 +21,8 @@ public class SongServiceClientTestConfiguration {
         return header;
     }
 
-//    @Bean
-//    public SongServiceClient songServiceClient(RetryTemplate retryTemplate, WebClient songServiceWebClient) {
-//        return new SongServiceClient(songServiceClientHeader(), retryTemplate, songServiceWebClient);
-//    }
+    @Bean
+    public SongServiceClient songServiceClient(RetryTemplate retryTemplate, WebClient songServiceWebClient) {
+        return new SongServiceClient(songServiceClientHeader(), retryTemplate, songServiceWebClient);
+    }
 }

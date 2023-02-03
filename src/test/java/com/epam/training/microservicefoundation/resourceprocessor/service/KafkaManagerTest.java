@@ -8,7 +8,7 @@ import com.epam.training.microservicefoundation.resourceprocessor.common.MockSer
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.KafkaTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.KafkaTopicTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.ResourceServiceClientTestConfiguration;
-import com.epam.training.microservicefoundation.resourceprocessor.configuration.RetryTestConfiguration;
+import com.epam.training.microservicefoundation.resourceprocessor.configuration.RetryTemplateTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.SongServiceClientTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.WebClientTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceRecord;
@@ -61,7 +61,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         KafkaTestConfiguration.class,
         KafkaTopicTestConfiguration.class,
         WebClientTestConfiguration.class,
-        RetryTestConfiguration.class,
+        RetryTemplateTestConfiguration.class,
         ResourceServiceClientTestConfiguration.class,
         SongServiceClientTestConfiguration.class
 })
