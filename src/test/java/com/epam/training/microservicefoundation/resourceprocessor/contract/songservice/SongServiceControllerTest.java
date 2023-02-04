@@ -4,8 +4,8 @@ import com.epam.training.microservicefoundation.resourceprocessor.client.SongSer
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.RetryTemplateTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.SongServiceClientTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.WebClientTestConfiguration;
+import com.epam.training.microservicefoundation.resourceprocessor.model.SongMetadata;
 import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecord;
-import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecordId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import static org.springframework.test.util.AssertionErrors.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureStubRunner(stubsMode = StubRunnerProperties.StubsMode.LOCAL,
@@ -42,23 +40,23 @@ class SongServiceControllerTest {
 
     @Test
     void shouldSaveSongMetadata() {
-        SongRecord songRecord = new SongRecord.Builder(1L, "New office", "03:22")
+        SongMetadata songMetadata = new SongMetadata.Builder(1L, "New office", "03:22")
                 .artist("John Kennedy")
                 .album("ASU")
                 .year(1999).build();
-        SongRecordId songRecordId = songServiceClient.post(songRecord);
+        SongRecord songRecord = songServiceClient.post(songMetadata);
 
-        Assertions.assertNotNull(songRecordId);
-        Assertions.assertEquals(199L, songRecordId.getId());
+        Assertions.assertNotNull(songRecord);
+        Assertions.assertEquals(199L, songRecord.getId());
     }
 
     @Test
     void shouldReturnBadRequestWhenSaveSongMetadata() {
-        SongRecord songRecord = new SongRecord.Builder(1L, "New office", "03:22")
+        SongMetadata songMetadata = new SongMetadata.Builder(1L, "New office", "03:22")
                 .artist("John Kennedy")
                 .album("ASU")
                 .year(2099).build();
-        SongRecordId post = songServiceClient.post(songRecord);
+        SongRecord post = songServiceClient.post(songMetadata);
         Assertions.assertNull(post);
     }
 }

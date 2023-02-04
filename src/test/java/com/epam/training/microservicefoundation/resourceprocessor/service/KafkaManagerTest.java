@@ -13,7 +13,7 @@ import com.epam.training.microservicefoundation.resourceprocessor.configuration.
 import com.epam.training.microservicefoundation.resourceprocessor.configuration.WebClientTestConfiguration;
 import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceRecord;
 import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceType;
-import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecordId;
+import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecord;
 import kotlin.jvm.functions.Function1;
 import okio.Buffer;
 import okio.Okio;
@@ -123,7 +123,7 @@ class KafkaManagerTest {
         resourceServiceServer.responseWithBuffer(HttpStatus.OK, fileBuffer(),
                 Collections.singletonMap(HttpHeaders.CONTENT_TYPE, ResourceType.MP3.getMimeType()));
 
-        songServiceServer.responseWithJson(HttpStatus.CREATED, new SongRecordId(1L),
+        songServiceServer.responseWithJson(HttpStatus.CREATED, new SongRecord(1L),
                 Collections.singletonMap(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE));
 
         producer.publish(resourceRecord);
@@ -139,7 +139,7 @@ class KafkaManagerTest {
         resourceServiceServer.responseWithBuffer(HttpStatus.OK, fileBuffer(),
                 Collections.singletonMap(HttpHeaders.CONTENT_TYPE, ResourceType.MP3.getMimeType()));
 
-        songServiceServer.responseWithJson(HttpStatus.CREATED, new SongRecordId(1L),
+        songServiceServer.responseWithJson(HttpStatus.CREATED, new SongRecord(1L),
                 Collections.singletonMap(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE));
 
         producer.publish(resourceRecord);

@@ -3,7 +3,7 @@ package com.epam.training.microservicefoundation.resourceprocessor;
 import com.epam.training.microservicefoundation.resourceprocessor.client.ResourceServiceClient;
 import com.epam.training.microservicefoundation.resourceprocessor.client.SongServiceClient;
 import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceRecord;
-import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecordId;
+import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecord;
 import com.epam.training.microservicefoundation.resourceprocessor.service.ResourceProcessorService;
 import com.epam.training.microservicefoundation.resourceprocessor.service.ResourceRecordValidator;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,7 +50,7 @@ class ResourceProcessorServiceTest {
 
         when(resourceRecordValidator.validate(resourceRecord)).thenReturn(Boolean.TRUE);
         when(resourceServiceClient.getById(resourceRecord.getId())).thenReturn(Optional.of(testFile));
-        when(songServiceClient.post(any())).thenReturn(new SongRecordId(1L));
+        when(songServiceClient.post(any())).thenReturn(new SongRecord(1L));
 
         boolean isProcessed = service.processResource(resourceRecord);
         assertTrue(isProcessed);

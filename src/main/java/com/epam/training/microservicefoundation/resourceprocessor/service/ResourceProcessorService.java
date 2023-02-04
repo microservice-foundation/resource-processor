@@ -3,7 +3,7 @@ package com.epam.training.microservicefoundation.resourceprocessor.service;
 import com.epam.training.microservicefoundation.resourceprocessor.client.ResourceServiceClient;
 import com.epam.training.microservicefoundation.resourceprocessor.client.SongServiceClient;
 import com.epam.training.microservicefoundation.resourceprocessor.model.ResourceRecord;
-import com.epam.training.microservicefoundation.resourceprocessor.model.SongRecord;
+import com.epam.training.microservicefoundation.resourceprocessor.model.SongMetadata;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
@@ -66,25 +66,25 @@ public class ResourceProcessorService {
         return isProcessed;
     }
 
-    private SongRecord processFile(long resourceId, File file) throws InvalidDataException, UnsupportedTagException, IOException {
+    private SongMetadata processFile(long resourceId, File file) throws InvalidDataException, UnsupportedTagException, IOException {
         Mp3File mp3File = new Mp3File(file);
         String duration = String.format("%1d:%2d", mp3File.getLengthInSeconds() / 60, mp3File.getLengthInSeconds() % 60);
         if(mp3File.hasId3v1Tag()) {
-            return new SongRecord.Builder(resourceId, mp3File.getId3v1Tag().getTitle(),
+            return new SongMetadata.Builder(resourceId, mp3File.getId3v1Tag().getTitle(),
                     duration)
                     .artist(mp3File.getId3v1Tag().getArtist())
                     .album(mp3File.getId3v1Tag().getAlbum())
                     .year(Integer.parseInt(mp3File.getId3v1Tag().getYear()))
                     .build();
         } else if (mp3File.hasId3v2Tag()) {
-            return new SongRecord.Builder(resourceId, mp3File.getId3v2Tag().getTitle(),
+            return new SongMetadata.Builder(resourceId, mp3File.getId3v2Tag().getTitle(),
                     duration)
                     .artist(mp3File.getId3v2Tag().getArtist())
                     .album(mp3File.getId3v2Tag().getAlbum())
                     .year(Integer.parseInt(mp3File.getId3v2Tag().getYear()))
                     .build();
         } else {
-            return new SongRecord.Builder(resourceId, "No name: " + LocalDateTime.now(), duration).build();
+            return new SongMetadata.Builder(resourceId, "No name: " + LocalDateTime.now(), duration).build();
         }
     }
 
