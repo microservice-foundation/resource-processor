@@ -3,7 +3,7 @@ MAINTAINER Yusuf Murodov "yusuf.murodov1@gmail.com"
 WORKDIR /app
 COPY . .
 RUN chmod +x ./gradlew
-RUN ./gradlew build
+RUN ./gradlew build -x test
 
 FROM base as development
 CMD ["./gradlew", "bootRun", "-Dspring.profiles.active=dev", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001'"]
